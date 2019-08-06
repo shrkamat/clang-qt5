@@ -1,0 +1,6 @@
+* Clang toolchain
+* qt5 v12
+
+repo init -u git@github.com:shrkamat/clang-manifest.git
+repo sync -j4
+
