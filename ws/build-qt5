@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -xe
+
+QROOT=$PWD/qt5
+
+mkdir -p build/qt5 && cd build/qt5
+$QROOT/configure -qt-xcb -platform linux-clang-libc++ -confirm-license -opensource -nomake examples
+make -j4
+make -j4 install

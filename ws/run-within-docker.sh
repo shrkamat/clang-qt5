@@ -8,12 +8,14 @@
 # 1. repo sync to be successfull
 # 2. clang folder to be present
 
+set -xe
+
 CROOT=$PWD
 
 # clang
 cd $CROOT
 mkdir -p clang/build/llvm && cd clang/build/llvm
-cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD='X86' -DLLVM_ENABLE_PROJECTS='clang' -G Ninja $CROOT/clang/code/llvm
+cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DLLVM_TARGETS_TO_BUILD='X86' -DLLVM_ENABLE_PROJECTS='clang' -DCOMPILER_RT_BUILD_SANITIZERS=OFF -G Ninja $CROOT/clang/code/llvm
 ninja install
 
 # libcxx round 1
@@ -25,7 +27,7 @@ ninja install
 # libcxxabi
 # this is a very old module & is based on custom script
 cd $CROOT
-cd $CROOT/clang/llvm/libcxxabi/lib
+cd $CROOT/clang/code/llvm/libcxxabi/lib
 ./buildit
 cp libc++abi.so.1.0 /usr/lib/
 ln -s /usr/lib/libc++abi.so.1.0 /usr/lib/libc++abi.so.1
